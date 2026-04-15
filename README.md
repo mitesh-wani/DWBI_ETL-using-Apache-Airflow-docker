@@ -1,4 +1,4 @@
-![WhatsApp Image 2026-04-08 at 1 03 25 AM](https://github.com/user-attachments/assets/26615bca-6ece-4390-b65b-ad0396dc5c76)
+    ![WhatsApp Image 2026-04-08 at 1 03 25 AM](https://github.com/user-attachments/assets/26615bca-6ece-4390-b65b-ad0396dc5c76)
 # 🚀 Airflow ETL Pipeline with PostgreSQL & Google Sheets
 
 ## 📌 Project Overview
@@ -205,8 +205,47 @@ Permission: **Editor**
 ### 1. Extract
 
 * Reads CSV file
-* Validates dataset size
+```mermaid
+erDiagram
 
+    FACT_ORDERS {
+        string order_id
+        datetime order_time
+        datetime delivery_time
+        float delivery_duration_min
+        float customer_rating
+        boolean is_canceled
+        int cancel_flag
+        boolean is_delayed
+        float risk_score
+    }
+
+    DIM_RESTAURANT {
+        string restaurant
+    }
+
+    DIM_LOCATION {
+        string city
+        string state
+        float latitude
+        float longitude
+    }
+
+    DIM_TIME {
+        int order_hour
+        string order_day
+    }
+
+    DIM_RATING {
+        float customer_rating
+        string rating_category
+    }
+
+    FACT_ORDERS ||--|| DIM_RESTAURANT : has
+    FACT_ORDERS ||--|| DIM_LOCATION : occurs_in
+    FACT_ORDERS ||--|| DIM_TIME : occurs_at
+    FACT_ORDERS ||--|| DIM_RATING : categorized_as
+```
 ```python
 df = pd.read_csv("file.csv")
 ```
