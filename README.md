@@ -1,4 +1,5 @@
-    ![WhatsApp Image 2026-04-08 at 1 03 25 AM](https://github.com/user-attachments/assets/26615bca-6ece-4390-b65b-ad0396dc5c76)
+<img width="1600" height="804" alt="image" src="https://github.com/user-attachments/assets/18bc8b71-7716-4991-ba68-cefb0bc869d5" />
+
 # 🚀 Airflow ETL Pipeline with PostgreSQL & Google Sheets
 
 ## 📌 Project Overview
@@ -210,41 +211,66 @@ erDiagram
 
     FACT_ORDERS {
         string order_id
-        datetime order_time
-        datetime delivery_time
-        float delivery_duration_min
+        datetime time_id
+        int status_id
+        int location_id
+        int restaurant_id
+        float order_amount
+        float delivery_time_minutes
+        int prep_time_minute
+        float distance_km
         float customer_rating
-        boolean is_canceled
-        int cancel_flag
-        boolean is_delayed
-        float risk_score
+        float discount_applied
+        int order_count
     }
 
-    DIM_RESTAURANT {
-        string restaurant
+    DIM_STATUS {
+        int status_id
+        string status
+        string status_category
     }
 
     DIM_LOCATION {
+        int location_id
         string city
+        string area
         string state
+        string zone
+        int pincode
         float latitude
         float longitude
+        string delivery_radius_category
     }
 
     DIM_TIME {
-        int order_hour
-        string order_day
+        int time_id
+        DateTime date
+        int day
+        int month
+        int year
+        int day_of_week
+        int week_of_year
+        int is_weekend
+        int hour
+        int time_slot
+
     }
 
-    DIM_RATING {
-        float customer_rating
-        string rating_category
+    DIM_RESTAURANT {
+        int restaurant_id
+        string restaurant_name
+        string cuisine_type
+        float rating
+        string price_category
+        int avg_prep_time
+        int is_active
+        datetime partner-since
     }
 
     FACT_ORDERS ||--|| DIM_RESTAURANT : has
     FACT_ORDERS ||--|| DIM_LOCATION : occurs_in
     FACT_ORDERS ||--|| DIM_TIME : occurs_at
-    FACT_ORDERS ||--|| DIM_RATING : categorized_as
+    FACT_ORDERS ||--|| DIM_STATUS : categorized_as
 ```
 ```python
 df = pd.read_csv("file.csv")
